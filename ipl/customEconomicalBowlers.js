@@ -8,16 +8,19 @@ function custom_Top_Bowlers(matches,deliveries)
     return result;
 }
 
-ecoThisYear(matches,deliveries,year)
+function ecoThisYear(matches,deliveries,year)
 {
     let mat=[];
     let bowlers=[];
     let boweco={};
     let topeco;
+    let over=0;
+    let runs=0;
+    let count=0;
 
     for(let match of matches)
     {
-         if(match.season == i)
+         if(match.season == year)
          {
                 mat.push(match.id);
                
@@ -67,10 +70,11 @@ ecoThisYear(matches,deliveries,year)
         
             }
              count=0;
-            boweco[bowlers]=(runs/(over)).toFixed(2);
+            boweco[b]=(runs/(over)).toFixed(2);
             over=0;
             runs=0;
         }
+        
         topeco=(Object.entries(boweco).sort((a,b)=>a[1]-b[1])).slice(0, 10);
         return topeco;
 }
