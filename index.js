@@ -52,7 +52,7 @@ csv()
 .fromFile(matches_File_Path)
 .then((matches)=>{ csv()
   .fromFile(deliveries_File_Path)
-.then((deliveries)=>{let result=custom_Top_Bowlers(matches,deliveries);
+.then((deliveries)=>{let result=customEconomicalBowlers(matches,deliveries);
   savecustom_Top_Bowlers(result);
 })});
     
