@@ -8,6 +8,7 @@ const matchesWonByTeam = require("./ipl/matchesWonByTeam");
 const extraRuns_2016 = require("./ipl/extraRuns_2016");
 const top_Economy_Bowlers = require("./ipl/top_Economy_Bowlers");
 const strikeRatesPerYear = require("./ipl/strikeRatesPerYear");
+const customEconomicalBowlers = require("./ipl/customEconomicalBowlers");
 let jsonData;
 
 function main() {
@@ -45,6 +46,14 @@ csv()
   .fromFile(deliveries_File_Path)
 .then((deliveries)=>{let result=strikeRatesPerYear(matches,deliveries);
   savestrikeRatesPerYear(result);
+})});
+
+csv()
+.fromFile(matches_File_Path)
+.then((matches)=>{ csv()
+  .fromFile(deliveries_File_Path)
+.then((deliveries)=>{let result=custom_Top_Bowlers(matches,deliveries);
+  savecustom_Top_Bowlers(result);
 })});
     
 }
@@ -109,6 +118,19 @@ function saveMatchesPlayedPerYear(result) { // this function is for to save data
     fs.writeFile(JSON_OUTPUT_FILE_PATH,jsonString, "utf8", err=> {
       if (err) {
       console.error(err);}
+    });
+  }
+
+
+  function savecustom_Top_Bowlers(result) { // this function is for to save data in a file which is accessible to browser,soe it must be in public.
+    jsonData = {
+      customEconomy: result
+    };
+    const jsonString = JSON.stringify(jsonData);
+    fs.writeFile(JSON_OUTPUT_FILE_PATH, jsonString, "utf8", err => {
+      if (err) {
+        console.error(err);
+      }
     });
   }
 
