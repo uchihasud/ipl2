@@ -123,9 +123,7 @@ function saveMatchesPlayedPerYear(result) { // this function is for to save data
 
 
   function savecustom_Top_Bowlers(result) { // this function is for to save data in a file which is accessible to browser,soe it must be in public.
-    jsonData = {
-      customEconomy: result
-    };
+    jsonData["customEconomy"]=result;
     const jsonString = JSON.stringify(jsonData);
     fs.writeFile(JSON_OUTPUT_FILE_PATH, jsonString, "utf8", err => {
       if (err) {
