@@ -15,6 +15,63 @@ function fetchAndVisualizeData() {
     visualizeStrikeRatesPerYear(data.strikeRate)
     return;
   }
+
+  var year
+const form = document.querySelector('form')
+form.addEventListener('submit', (e)=>{
+  year = form.elements.year.value
+  //console.log(form.elements.year.value)
+  e.preventDefault()
+  fetch(`/economy?year=${year}`)
+    .then(data => data.json())
+    .then(visualizeCustomData)
+})
+
+function visualizeCustomData(data)
+{
+  document.querySelector("#custom-economy-bowlers").innerHTML="", visualizeCustomEconomyBowlers(data, year)
+  return;
+}
+
+function visualizeCustomEconomyBowlers(data, year)
+{
+  
+  for(let i=0;i<data.length;i++)
+  {
+    data[i][1]=+(data[i][1]);
+  }
+  
+  Highcharts.chart("custom-economy-bowlers", {
+    chart: {
+      type: "column"
+    },
+    title: {
+      text: `(i) Top 10 Economical Bowlers in ${year}`
+    },
+    subtitle: {
+      text:
+        'Source: <a href="https://www.kaggle.com/nowke9/ipldata/data">IPL Dataset</a>'
+    },
+    xAxis: {
+      type: "category"
+    },
+    yAxis: {
+      min: 0,
+      title: {
+        text: "Economy"
+      }
+    },
+   tooltip: {
+      pointFormat: 'Economy: <b>{point.y:2f} </b>'
+  },
+    series: [
+      {
+        name: "Bowlers",
+        data: data
+      }
+    ]
+  });
+}
   
   function visualizeMatchesPlayedPerYear(matchesPlayedPerYear) {
     const seriesData = [];
@@ -153,7 +210,7 @@ function visualizeExtraRuns_2016(extraRuns) {
   for (let team in extraRuns) {
     seriesData.push([team, extraRuns[team]]);
   } 
-  console.log(seriesData);
+ 
   Highcharts.chart("extra-runs", {
     chart: {
       type: "column"
@@ -205,7 +262,7 @@ function visualizeTopBowler(economicalBowler) {
   for (let player in economicalBowler) {
     seriesData.push([player, +(economicalBowler[player])]);
   } 
- console.log(seriesData);
+
   Highcharts.chart("eco-bowl", {
     chart: {
       type: "column"
